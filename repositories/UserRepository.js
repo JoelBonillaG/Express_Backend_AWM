@@ -3,28 +3,27 @@ const bcrypt = require('bcryptjs');
 
 class UserRepository {
   constructor() {
-    // Preloaded users in memory
     this.users = [
         new User({
             id: 1,
-            nombre: 'Sofía Morales',
+            name: 'Sofía Morales',
             email: 'sofia.morales@empresa.com',
             password: bcrypt.hashSync('adminSecure!2024', 10),
-            rol: 'admin'
+            role: 'admin'
           }),
           new User({
             id: 2,
-            nombre: 'Carlos Herrera',
+            name: 'Carlos Herrera',
             email: 'carlos.herrera@empresa.com',
             password: bcrypt.hashSync('userPass123', 10),
-            rol: 'usuario'
+            role: 'usuario'
           }),
           new User({
             id: 3,
-            nombre: 'Valentina Rojas',
+            name: 'Valentina Rojas',
             email: 'valentina.rojas@empresa.com',
             password: bcrypt.hashSync('userPass456', 10),
-            rol: 'usuario'
+            role: 'usuario'
           }),
     ];
     this.nextId = 4;
@@ -46,7 +45,7 @@ class UserRepository {
     const newUser = new User({
       id: this.nextId++,
       ...userData,
-      fechaCreacion: new Date()
+      createdAt: new Date()
     });
     this.users.push(newUser);
     return newUser;
@@ -74,13 +73,13 @@ class UserRepository {
   async count(filters = {}) {
     let filteredUsers = [...this.users];
     
-    if (filters.rol) {
-      filteredUsers = filteredUsers.filter(u => u.rol === filters.rol);
+    if (filters.role) {
+      filteredUsers = filteredUsers.filter(u => u.role === filters.role);
     }
-    if (filters.nombre) {
-      const nombreLower = filters.nombre.toLowerCase();
+    if (filters.name) {
+      const nameLower = filters.name.toLowerCase();
       filteredUsers = filteredUsers.filter(u => 
-        u.nombre.toLowerCase().includes(nombreLower)
+        u.name.toLowerCase().includes(nameLower)
       );
     }
     if (filters.email) {
@@ -89,8 +88,8 @@ class UserRepository {
         u.email.toLowerCase().includes(emailLower)
       );
     }
-    if (filters.activo !== undefined) {
-      filteredUsers = filteredUsers.filter(u => u.activo === filters.activo);
+    if (filters.active !== undefined) {
+      filteredUsers = filteredUsers.filter(u => u.active === filters.active);
     }
     
     return filteredUsers.length;
@@ -99,14 +98,13 @@ class UserRepository {
   async findWithFilters(filters = {}, sort = {}, skip = 0, limit = 10) {
     let filteredUsers = [...this.users];
     
-    // Apply filters
-    if (filters.rol) {
-      filteredUsers = filteredUsers.filter(u => u.rol === filters.rol);
+    if (filters.role) {
+      filteredUsers = filteredUsers.filter(u => u.role === filters.role);
     }
-    if (filters.nombre) {
-      const nombreLower = filters.nombre.toLowerCase();
+    if (filters.name) {
+      const nameLower = filters.name.toLowerCase();
       filteredUsers = filteredUsers.filter(u => 
-        u.nombre.toLowerCase().includes(nombreLower)
+        u.name.toLowerCase().includes(nameLower)
       );
     }
     if (filters.email) {
@@ -115,11 +113,10 @@ class UserRepository {
         u.email.toLowerCase().includes(emailLower)
       );
     }
-    if (filters.activo !== undefined) {
-      filteredUsers = filteredUsers.filter(u => u.activo === filters.activo);
+    if (filters.active !== undefined) {
+      filteredUsers = filteredUsers.filter(u => u.active === filters.active);
     }
     
-    // Apply sorting
     if (sort.field) {
       filteredUsers.sort((a, b) => {
         const aVal = a[sort.field];
@@ -129,7 +126,6 @@ class UserRepository {
       });
     }
     
-    // Apply pagination
     return filteredUsers.slice(skip, skip + limit);
   }
 }

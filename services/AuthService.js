@@ -15,7 +15,7 @@ class AuthService {
       throw new Error('Credenciales inválidas');
     }
 
-    if (!user.activo) {
+    if (!user.active) {
       throw new Error('La cuenta de usuario está inactiva');
     }
 
@@ -37,7 +37,7 @@ class AuthService {
     const payload = {
       id: user.id,
       email: user.email,
-      rol: user.rol
+      role: user.role
     };
 
     return jwt.sign(payload, config.jwt.secret, {

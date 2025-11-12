@@ -33,18 +33,15 @@ class UserService {
   }
 
   async createUser(userData, requesterRole) {
-    // Check if email already exists
     const existingUser = await this.userRepository.findByEmail(userData.email);
     if (existingUser) {
       throw new Error('El correo electrónico ya existe');
     }
 
-    // Hash password if provided
     if (userData.password) {
       userData.password = await bcrypt.hash(userData.password, 10);
     }
 
-    // Only admins can set admin role
     if (userData.rol === 'admin' && requesterRole !== 'admin') {
       throw new Error('Solo los administradores pueden crear usuarios administradores');
     }
@@ -59,22 +56,18 @@ class UserService {
       throw new Error('Usuario no encontrado');
     }
 
-    // Users can only update themselves unless they are admin
     if (requesterRole !== 'admin' && parseInt(id) !== requesterId) {
       throw new Error('Solo puedes actualizar tu propio perfil');
     }
 
-    // Only admins can change roles
-    if (userData.rol && userData.rol !== user.rol && requesterRole !== 'admin') {
+    if (userData.role && userData.role !== user.role && requesterRole !== 'admin') {
       throw new Error('Solo los administradores pueden cambiar los roles de usuario');
     }
 
-    // Only admins can create admin users
-    if (userData.rol === 'admin' && requesterRole !== 'admin') {
+    if (userData.role === 'admin' && requesterRole !== 'admin') {
       throw new Error('Solo los administradores pueden asignar el rol de administrador');
     }
 
-    // Hash password if provided
     if (userData.password) {
       userData.password = await bcrypt.hash(userData.password, 10);
     }
@@ -89,12 +82,10 @@ class UserService {
       throw new Error('Usuario no encontrado');
     }
 
-    // Users cannot delete themselves
     if (parseInt(id) === requesterId) {
       throw new Error('No puedes eliminar tu propia cuenta');
     }
 
-    // Only admins can delete users
     if (requesterRole !== 'admin') {
       throw new Error('Solo los administradores pueden eliminar usuarios');
     }

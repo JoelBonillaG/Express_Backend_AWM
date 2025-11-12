@@ -13,7 +13,7 @@ const handleValidationErrors = (req, res, next) => {
 };
 
 const validateCreateUser = [
-  body('nombre')
+  body('name')
     .trim()
     .notEmpty().withMessage('El nombre es requerido')
     .isLength({ min: 2, max: 100 }).withMessage('El nombre debe tener entre 2 y 100 caracteres'),
@@ -28,13 +28,13 @@ const validateCreateUser = [
     .notEmpty().withMessage('La contraseña es requerida')
     .isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres'),
   
-  body('rol')
+  body('role')
     .optional()
     .isIn(['admin', 'usuario']).withMessage('El rol debe ser uno de: admin, usuario'),
   
-  body('activo')
+  body('active')
     .optional()
-    .isBoolean().withMessage('activo debe ser un valor booleano'),
+    .isBoolean().withMessage('active debe ser un valor booleano'),
   
   handleValidationErrors
 ];
@@ -43,7 +43,7 @@ const validateUpdateUser = [
   param('id')
     .isInt({ min: 1 }).withMessage('El ID debe ser un entero positivo'),
   
-  body('nombre')
+  body('name')
     .optional()
     .trim()
     .isLength({ min: 2, max: 100 }).withMessage('El nombre debe tener entre 2 y 100 caracteres'),
@@ -58,13 +58,13 @@ const validateUpdateUser = [
     .optional()
     .isLength({ min: 6 }).withMessage('La contraseña debe tener al menos 6 caracteres'),
   
-  body('rol')
+  body('role')
     .optional()
     .isIn(['admin', 'usuario']).withMessage('El rol debe ser uno de: admin, usuario'),
   
-  body('activo')
+  body('active')
     .optional()
-    .isBoolean().withMessage('activo debe ser un valor booleano'),
+    .isBoolean().withMessage('active debe ser un valor booleano'),
   
   handleValidationErrors
 ];
@@ -80,11 +80,11 @@ const validateGetUsers = [
     .isInt({ min: 1, max: 100 }).withMessage('El límite debe estar entre 1 y 100')
     .toInt(),
   
-  query('rol')
+  query('role')
     .optional()
     .isIn(['admin', 'usuario']).withMessage('El rol debe ser uno de: admin, usuario'),
   
-  query('nombre')
+  query('name')
     .optional()
     .trim()
     .isLength({ min: 1 }).withMessage('El filtro de nombre no debe estar vacío'),
@@ -98,9 +98,9 @@ const validateGetUsers = [
     .optional()
     .matches(/^[a-zA-Z]+:(asc|desc)$/).withMessage('El ordenamiento debe estar en formato: campo:asc o campo:desc'),
   
-  query('activo')
+  query('active')
     .optional()
-    .isBoolean().withMessage('activo debe ser un valor booleano')
+    .isBoolean().withMessage('active debe ser un valor booleano')
     .toBoolean(),
   
   handleValidationErrors

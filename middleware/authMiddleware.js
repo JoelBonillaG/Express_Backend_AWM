@@ -14,7 +14,6 @@ const authenticate = async (req, res, next) => {
     const token = authHeader.substring(7);
     const decoded = authService.verifyToken(token);
     
-    // Attach user info to request
     req.user = decoded;
     next();
   } catch (error) {
@@ -34,7 +33,7 @@ const authorize = (...allowedRoles) => {
       });
     }
 
-    if (!allowedRoles.includes(req.user.rol)) {
+    if (!allowedRoles.includes(req.user.role)) {
       return res.status(403).json({
         success: false,
         message: 'Permisos insuficientes. Rol requerido: ' + allowedRoles.join(' o ')

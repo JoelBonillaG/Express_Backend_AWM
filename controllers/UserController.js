@@ -10,14 +10,12 @@ class UserController {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 10;
       
-      // Build filters
       const filters = {};
-      if (req.query.rol) filters.rol = req.query.rol;
-      if (req.query.nombre) filters.nombre = req.query.nombre;
+      if (req.query.role) filters.role = req.query.role;
+      if (req.query.name) filters.name = req.query.name;
       if (req.query.email) filters.email = req.query.email;
-      if (req.query.activo !== undefined) filters.activo = req.query.activo === 'true';
+      if (req.query.active !== undefined) filters.active = req.query.active === 'true';
       
-      // Build sort
       const sort = {};
       if (req.query.sort) {
         const [field, order] = req.query.sort.split(':');
@@ -51,7 +49,7 @@ class UserController {
 
   async createUser(req, res, next) {
     try {
-      const requesterRole = req.user?.rol || 'usuario';
+      const requesterRole = req.user?.role || 'usuario';
       const newUser = await this.userService.createUser(req.body, requesterRole);
       
       res.status(201).json({
@@ -66,7 +64,7 @@ class UserController {
 
   async updateUser(req, res, next) {
     try {
-      const requesterRole = req.user?.rol || 'usuario';
+      const requesterRole = req.user?.role || 'usuario';
       const requesterId = req.user?.id;
       const updatedUser = await this.userService.updateUser(
         req.params.id,

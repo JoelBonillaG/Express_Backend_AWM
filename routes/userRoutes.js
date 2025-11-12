@@ -10,7 +10,6 @@ const {
   validateDeleteUser
 } = require('../validators/userValidators');
 
-// GET /users - Get all users with pagination, filters, and sorting
 router.get(
   '/',
   authenticate,
@@ -18,7 +17,6 @@ router.get(
   userController.getAllUsers.bind(userController)
 );
 
-// GET /users/:id - Get user by ID
 router.get(
   '/:id',
   authenticate,
@@ -26,7 +24,6 @@ router.get(
   userController.getUserById.bind(userController)
 );
 
-// POST /users - Create new user
 router.post(
   '/',
   authenticate,
@@ -34,7 +31,6 @@ router.post(
   userController.createUser.bind(userController)
 );
 
-// PUT /users/:id - Update user
 router.put(
   '/:id',
   authenticate,
@@ -42,7 +38,6 @@ router.put(
   userController.updateUser.bind(userController)
 );
 
-// DELETE /users/:id - Delete user (admin only)
 router.delete(
   '/:id',
   authenticate,

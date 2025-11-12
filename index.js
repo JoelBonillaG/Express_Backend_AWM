@@ -7,16 +7,13 @@ const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 
-// Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
     success: true,
@@ -25,10 +22,8 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Error handling middleware (must be last)
 app.use(errorHandler);
 
-// 404 handler
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -36,7 +31,6 @@ app.use((req, res) => {
   });
 });
 
-// Start server
 const PORT = config.port;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
