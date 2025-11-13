@@ -1,0 +1,48 @@
+# Dependencias
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Archivos de entorno
+.env
+.env.local
+.env.*.local
+
+# Documentación
+*.md
+docs
+DOCUMENTACION_*.md
+
+# Control de versiones
+.git
+.gitignore
+.gitattributes
+
+# IDE y editores
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Archivos temporales
+tmp
+temp
+*.tmp
+
+# Testing
+coverage
+.nyc_output
+
+# Build artifacts
+dist
+build
+

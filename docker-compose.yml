@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # Servicio principal de la aplicación Express
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: express-backend-awm
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    networks:
+      - app-network
+
+# Red para la comunicación entre servicios
+networks:
+  app-network:
+    driver: bridge
+
