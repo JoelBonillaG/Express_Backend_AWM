@@ -143,6 +143,7 @@ describe('UserService', () => {
     });
 
     it('debería lanzar error si un no-admin intenta crear admin', async () => {
+      // El código usa 'rol' en createUser (línea 45 de UserService.js)
       const adminUserData = { ...mockUserData, rol: 'admin' };
       mockUserRepository.findByEmail.mockResolvedValue(null);
 
