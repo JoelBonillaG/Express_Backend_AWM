@@ -55,11 +55,14 @@ class UserRepository {
     const index = this.users.findIndex(user => user.id === parseInt(id));
     if (index === -1) return null;
     
-    this.users[index] = {
-      ...this.users[index],
+    const existingUser = this.users[index];
+    const updatedUser = new User({
+      ...existingUser,
       ...userData
-    };
-    return this.users[index];
+    });
+    
+    this.users[index] = updatedUser;
+    return updatedUser;
   }
 
   async delete(id) {

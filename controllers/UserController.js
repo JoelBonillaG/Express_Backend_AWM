@@ -85,7 +85,7 @@ class UserController {
 
   async deleteUser(req, res, next) {
     try {
-      const requesterRole = req.user?.rol;
+      const requesterRole = req.user?.role;
       const requesterId = req.user?.id;
       const result = await this.userService.deleteUser(
         req.params.id,
