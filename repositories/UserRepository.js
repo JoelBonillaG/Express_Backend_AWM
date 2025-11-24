@@ -56,11 +56,21 @@ class UserRepository {
     if (index === -1) return null;
     
     const existingUser = this.users[index];
+<<<<<<< HEAD
     this.users[index] = new User({
       ...existingUser,
       ...userData
     });
     return this.users[index];
+=======
+    const updatedUser = new User({
+      ...existingUser,
+      ...userData
+    });
+    
+    this.users[index] = updatedUser;
+    return updatedUser;
+>>>>>>> e05b875a1c3aa5d2919c46ae1e221bd7609b44b8
   }
 
   async delete(id) {
