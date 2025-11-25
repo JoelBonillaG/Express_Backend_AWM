@@ -1,5 +1,11 @@
 const errorHandler = (err, req, res, next) => {
   console.error('Error:', err);
+  console.error('Stack:', err.stack);
+
+  // Si la respuesta ya fue enviada, delegar al handler por defecto
+  if (res.headersSent) {
+    return next(err);
+  }
 
   if (err.type === 'validation') {
     return res.status(400).json({
@@ -10,16 +16,18 @@ const errorHandler = (err, req, res, next) => {
   }
 
   if (err.message) {
-    const statusCode = err.statusCode || 400;
+    const statusCode = err.statusCode || 500;
     return res.status(statusCode).json({
       success: false,
-      message: err.message
+      message: err.message,
+      path: req.path
     });
   }
 
   res.status(500).json({
     success: false,
-      message: 'Error interno del servidor'
+    message: 'Error interno del servidor',
+    path: req.path
   });
 };
 
